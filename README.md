@@ -25,8 +25,8 @@ A production-grade hub-spoke network architecture deployed on Azure with central
 
 ## Architecture
 
-<!-- Replace with your actual Draw.io diagram screenshot -->
-<img alt="hub-spoke-architecture" src="docs/architecture.drawio.png" />
+<img width="1461" height="861" alt="architecture" src="https://github.com/user-attachments/assets/1784c11e-fbe6-4d89-a4f5-d3a8f585e2fa" />
+
 
 ## Network Security Controls
 
