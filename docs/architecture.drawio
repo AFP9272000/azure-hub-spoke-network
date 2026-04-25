@@ -1,0 +1,205 @@
+<mxfile host="app.diagrams.net" modified="2026-04-25" agent="Claude" version="24.0.0" type="device">
+  <diagram id="hub-spoke-architecture" name="Hub-Spoke Network Architecture">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Internet -->
+        <mxCell id="internet" value="Internet" style="shape=cloud;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="700" y="10" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Front Door + WAF Box -->
+        <mxCell id="fd-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="610" y="120" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fd-label" value="Azure Front Door + WAF" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontSize=14;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="700" y="125" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fd-details" value="Custom Rules: SQLi | XSS | Path Traversal | Rate Limiting | Geo-Filtering&#xa;Mode: Prevention | Tier: Standard" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="630" y="155" width="320" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow: Internet to Front Door -->
+        <mxCell id="arrow-inet-fd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;strokeColor=#d6b656;" edge="1" parent="1" source="internet" target="fd-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-inet-fd-label" value="HTTPS" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#666666;" vertex="1" connectable="0" parent="arrow-inet-fd">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Hub VNet -->
+        <mxCell id="hub-vnet" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=3;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="440" y="260" width="700" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="hub-label" value="Hub VNet (10.0.0.0/16)" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;fontSize=14;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="455" y="265" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Azure Firewall -->
+        <mxCell id="firewall" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="470" y="300" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="fw-label" value="Azure Firewall" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontSize=13;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="510" y="305" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="fw-subnet" value="AzureFirewallSubnet&#xa;10.0.1.0/26" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="500" y="330" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fw-details" value="App Rules (FQDN)&#xa;Net Rules (Port)&#xa;DNAT Rules&#xa;Threat Intel: Deny" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="490" y="360" width="160" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Bastion -->
+        <mxCell id="bastion" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="700" y="300" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bastion-label" value="Azure Bastion" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontSize=13;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="725" y="310" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="bastion-subnet" value="AzureBastionSubnet&#xa;10.0.2.0/26" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="715" y="340" width="130" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Management VM -->
+        <mxCell id="mgmt-vm" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="890" y="300" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mgmt-label" value="Management VM" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontSize=13;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="907" y="310" width="130" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="mgmt-subnet" value="snet-management&#xa;10.0.3.0/24 | No Public IP" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="900" y="340" width="140" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- UDR Label -->
+        <mxCell id="udr-label" value="UDRs: 0.0.0.0/0 → Firewall (10.0.1.4)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=2;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="530" y="460" width="260" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow: Front Door to Hub -->
+        <mxCell id="arrow-fd-hub" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="fd-box" target="hub-vnet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Web Spoke -->
+        <mxCell id="spoke-web" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=3;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="350" y="540" width="280" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="spoke-web-label" value="Spoke: Web Tier (10.1.0.0/16)" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;fontSize=13;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="360" y="545" width="230" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="web-app" value="App Service&#xa;(Node.js 20 LTS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="380" y="590" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="web-vm" value="vm-web-test&#xa;(Ubuntu 24.04)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="380" y="660" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="web-nsg" value="NSG: nsg-web&#xa;RT: rt-spoke-web" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="370" y="720" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="web-outbound" value="Outbound: *.github.com&#xa;*.docker.io, *.azure.com" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="520" y="600" width="100" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Data Spoke -->
+        <mxCell id="spoke-data" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=3;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="950" y="540" width="280" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="spoke-data-label" value="Spoke: Data Tier (10.2.0.0/16)" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;fontSize=13;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="960" y="545" width="240" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="data-storage" value="Storage Account&#xa;(Private Endpoint)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="980" y="590" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="data-dns" value="Private DNS Zone&#xa;privatelink.blob.core.windows.net" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="980" y="660" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="data-nsg" value="NSG: nsg-data&#xa;RT: rt-spoke-data" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="980" y="720" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="data-outbound" value="Outbound: *.azure.com&#xa;*.microsoft.com ONLY" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="600" width="100" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Peering Arrows -->
+        <mxCell id="peer-web" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;strokeWidth=2;strokeColor=#6c8ebf;dashed=1;" edge="1" parent="1" source="hub-vnet" target="spoke-web">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="peer-web-label" value="VNet Peering&#xa;+ Forwarded Traffic" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#6c8ebf;" vertex="1" connectable="0" parent="peer-web">
+          <mxGeometry x="0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="peer-data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;strokeWidth=2;strokeColor=#6c8ebf;dashed=1;" edge="1" parent="1" source="hub-vnet" target="spoke-data">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="peer-data-label" value="VNet Peering&#xa;+ Forwarded Traffic" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#6c8ebf;" vertex="1" connectable="0" parent="peer-data">
+          <mxGeometry x="0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Cross-spoke arrow (through firewall) -->
+        <mxCell id="cross-spoke" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;strokeWidth=2;strokeColor=#b85450;dashed=1;dashPattern=8 4;" edge="1" parent="1" source="spoke-web" target="spoke-data">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="490" y="790" />
+              <mxPoint x="1090" y="790" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cross-spoke-label" value="Web→Data: SQL (1433) + HTTPS (443) ONLY&#xa;Data→Web: DENIED&#xa;All traffic routed through Firewall" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#b85450;" vertex="1" connectable="0" parent="cross-spoke">
+          <mxGeometry x="0" y="20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- No direct peering label -->
+        <mxCell id="no-peer" value="✕ No Spoke-to-Spoke Peering" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="680" y="770" width="220" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Monitoring Box -->
+        <mxCell id="monitoring" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="300" width="350" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="mon-label" value="Monitoring &amp; Analytics" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;fontSize=14;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="55" y="305" width="170" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="mon-law" value="Log Analytics Workspace" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="160" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="mon-flow" value="VNet Flow Logs&#xa;(All 3 VNets)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="390" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mon-ta" value="Traffic Analytics&#xa;(10-min interval)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="210" y="390" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mon-alerts" value="Azure Monitor Alerts&#xa;Denied Spike | WAF Block Spike" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="445" width="250" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow: Hub to Monitoring -->
+        <mxCell id="arrow-hub-mon" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;strokeWidth=1;strokeColor=#666666;dashed=1;" edge="1" parent="1" source="hub-vnet" target="monitoring">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-hub-mon-label" value="Diagnostic&#xa;Settings" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#666666;" vertex="1" connectable="0" parent="arrow-hub-mon">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Title -->
+        <mxCell id="title" value="Azure Hub-Spoke Network Architecture with Firewall + WAF" style="text;html=1;align=right;verticalAlign=bottom;resizable=0;points=[];fontSize=10;fontColor=#999999;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="850" width="400" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
