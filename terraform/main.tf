@@ -30,7 +30,7 @@ module "hub_network" {
   location                 = azurerm_resource_group.main.location
   address_space            = var.hub_vnet_address_space
   firewall_private_ip      = "10.0.1.4" # Known default for first IP in AzureFirewallSubnet
-  ssh_public_key           = file("~/.ssh/id_rsa.pub")
+  ssh_public_key           = var.ssh_public_key
   tags                     = var.tags
 }
 
@@ -47,7 +47,7 @@ module "spoke_web" {
   hub_vnet_name       = module.hub_network.vnet_name
   firewall_private_ip = module.firewall.firewall_private_ip
   deploy_test_vm      = true
-  ssh_public_key      = file("~/.ssh/id_rsa.pub")
+  ssh_public_key           = var.ssh_public_key
   tags                = var.tags
 
   depends_on = [module.firewall]
