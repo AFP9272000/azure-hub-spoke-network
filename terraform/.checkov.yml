@@ -1,0 +1,32 @@
+framework:
+  - terraform
+soft-fail: true
+skip-check:
+  # App Service (commented out due to Azure quota, but triaged)
+  - CKV_AZURE_212  # Failover instances, not applicable for dev/portfolio environment
+  - CKV_AZURE_225  # Zone redundancy, requires Premium SKU, cost-prohibitive for portfolio
+  - CKV_AZURE_211  # Production SKU, intentionally using lower tier for cost management
+  - CKV_AZURE_13   # App Service authentication, demo application, no user authentication required
+  - CKV_AZURE_17   # Client certificates, not applicable, Front Door handles TLS termination
+  - CKV_AZURE_63   # HTTP logging, demo application, monitoring handled at firewall/Front Door layer
+  - CKV_AZURE_65   # Detailed error messages, demo application, not production workload
+  - CKV_AZURE_66   # Failed request tracing, demo application, not production workload
+  - CKV_AZURE_213  # Health check, Front Door health probes handle origin monitoring
+  - CKV_AZURE_222  # Public access disabled, required for Front Door Standard (no private link support)
+  - CKV_AZURE_88   # Azure Files, not applicable, no persistent storage requirement
+
+  # Azure Firewall
+  - CKV_AZURE_220  # IDPS deny mode, requires Premium SKU (~2x cost), threat intelligence deny enabled on Standard
+  - CKV_AZURE_216  # DenyIntelMode on firewall, threat_intelligence_mode="Deny" set on firewall policy (fw-policy-hub)
+
+  # Virtual Machines
+  - CKV_AZURE_50   # VM extensions, SystemAssigned managed identity requires agent, test VMs only
+
+  # Storage Accounts
+  - CKV_AZURE_206  # GRS replication. LRS acceptable for non-production flow logs and dev data tier
+  - CKV_AZURE_33   # Queue service logging, not using Azure Queue storage
+  - CKV2_AZURE_1   # CMK encryption. Requires Key Vault + additional RBAC, platform encryption sufficient for portfolio
+  - CKV2_AZURE_41  # SAS expiration policy, not issuing SAS tokens, access via private endpoint and managed identity
+  - CKV2_AZURE_40  # Shared Key disabled, flow logs storage requires shared key access for Network Watcher
+  - CKV2_AZURE_33  # Private endpoint on flow logs storage, creates circular dependency with Network Watcher
+  - CKV2_AZURE_31  # Bastion subnet NSG, Azure manages AzureBastionSubnet security rules, custom NSG can break connectivity
