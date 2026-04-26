@@ -13,23 +13,11 @@ param sshPublicKey string
 @description('Storage account name')
 param storageAccountName string = 'sthubspokedata'
 
-@description('App Service name')
-param appServiceName string = 'app-hubspoke-web'
-
-@description('Front Door name')
-param frontDoorName string = 'fd-hubspoke'
-
-@description('WAF policy name')
-param wafPolicyName string = 'wafpolicyhubspoke'
-
 @description('Log Analytics workspace name')
 param logAnalyticsWorkspaceName string = 'law-hub-spoke'
 
 @description('Alert email')
 param alertEmail string = ''
-
-@description('Countries to geo-block')
-param geoBlockCountries array = ['CN', 'RU', 'KP', 'IR']
 
 @description('Resource tags')
 param tags object = {
@@ -66,7 +54,6 @@ module firewall 'modules/firewall.bicep' = {
     firewallSubnetId: hubNetwork.outputs.firewallSubnetId
     tags: tags
   }
-  dependsOn: [hubNetwork]
 }
 
 // Web Spoke
@@ -85,7 +72,6 @@ module spokeWeb 'modules/spoke-network.bicep' = {
     sshPublicKey: sshPublicKey
     tags: tags
   }
-  dependsOn: [firewall]
 }
 
 // Data Spoke
@@ -103,7 +89,6 @@ module spokeData 'modules/spoke-network.bicep' = {
     deployTestVm: false
     tags: tags
   }
-  dependsOn: [firewall]
 }
 
 // Storage
@@ -119,34 +104,32 @@ module storage 'modules/storage.bicep' = {
     dataSpokeVnetId: spokeData.outputs.vnetId
     tags: tags
   }
-  dependsOn: [spokeData]
 }
 
-// App Service
-//module appService 'modules/app-service.bicep' = {
-//  scope: rg
-//  name: 'app-service'
-//  params: {
-//    location: location
-//    appServiceName: appServiceName
-//    tags: tags
-//  }
-//}
+// App Service (commented out, Azure quota limitation on Free/Basic App Service VMs)
+// module appService 'modules/app-service.bicep' = {
+//   scope: rg
+//   name: 'app-service'
+//   params: {
+//     location: location
+//     appServiceName: appServiceName
+//     tags: tags
+//   }
+// }
 
-// Front Door + WAF
-//module frontDoor 'modules/front-door.bicep' = {
-//  scope: rg
-//  name: 'front-door'
-//  params: {
-//    resourceGroupName: resourceGroupName
-//    frontDoorName: frontDoorName
-//    wafPolicyName: wafPolicyName
-//    appServiceHostname: appService.outputs.appServiceHostname
-//    geoBlockCountries: geoBlockCountries
-//    tags: tags
-//  }
-//  dependsOn: [appService]
-//}
+// Front Door + WAF (commented out — depends on App Service)
+// module frontDoor 'modules/front-door.bicep' = {
+//   scope: rg
+//   name: 'front-door'
+//   params: {
+//     resourceGroupName: resourceGroupName
+//     frontDoorName: frontDoorName
+//     wafPolicyName: wafPolicyName
+//     appServiceHostname: appService.outputs.appServiceHostname
+//     geoBlockCountries: geoBlockCountries
+//     tags: tags
+//   }
+// }
 
 // Monitoring
 module monitoring 'modules/monitoring.bicep' = {
@@ -158,15 +141,10 @@ module monitoring 'modules/monitoring.bicep' = {
     hubVnetId: hubNetwork.outputs.vnetId
     webSpokeVnetId: spokeWeb.outputs.vnetId
     dataSpokeVnetId: spokeData.outputs.vnetId
-    firewallId: firewall.outputs.firewallId
-    frontDoorId: frontDoor.outputs.frontDoorId
     alertEmail: alertEmail
     tags: tags
   }
-  dependsOn: [firewall, frontDoor]
 }
 
 // Outputs
-output frontDoorEndpoint string = frontDoor.outputs.frontDoorEndpointHostname
 output firewallPrivateIp string = firewall.outputs.firewallPrivateIp
-output appServiceHostname string = appService.outputs.appServiceHostname
