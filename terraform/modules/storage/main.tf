@@ -1,15 +1,26 @@
 # Storage Account
 resource "azurerm_storage_account" "data" {
-  name                     = var.storage_account_name
-  location                 = var.location
-  resource_group_name      = var.resource_group_name
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+  name                          = var.storage_account_name
+  location                      = var.location
+  resource_group_name           = var.resource_group_name
+  account_tier                  = "Standard"
+  account_replication_type      = "LRS"
   public_network_access_enabled = false
-  tags                     = var.tags
+  min_tls_version               = "TLS1_2"
+  allow_nested_items_to_be_public = false
+  tags                          = var.tags
+
+  blob_properties {
+    delete_retention_policy {
+      days = 7
+    }
+    container_delete_retention_policy {
+      days = 7
+    }
+  }
 }
 
-# Private DNS Zone for Blob Storage
+#  Private DNS Zone for Blob Storage
 resource "azurerm_private_dns_zone" "blob" {
   name                = "privatelink.blob.core.windows.net"
   resource_group_name = var.resource_group_name
