@@ -51,8 +51,8 @@ jobs:
           tflint_version: latest
       - run: |
           cd ${{ env.TF_WORKING_DIR }}
-          tflint --init
-          tflint --recursive
+          tflint --init --config=$(pwd)/.tflint.hcl
+          tflint --recursive --config=$(pwd)/.tflint.hcl
 
       - name: Checkov Scan
         uses: bridgecrewio/checkov-action@v12
