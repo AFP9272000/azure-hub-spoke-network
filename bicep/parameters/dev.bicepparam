@@ -2,6 +2,7 @@ using '../main.bicep'
 
 param location = 'eastus'
 param resourceGroupName = 'hub-spoke-rg'
+param sshPublicKey = ''
 param storageAccountName = 'sthubspokedata'
 param appServiceName = 'app-hubspoke-web'
 param frontDoorName = 'fd-hubspoke'
