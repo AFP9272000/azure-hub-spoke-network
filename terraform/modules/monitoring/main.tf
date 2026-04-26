@@ -8,14 +8,25 @@ resource "azurerm_log_analytics_workspace" "main" {
   tags                = var.tags
 }
 
-# --- Storage Account for Flow Logs ---
 resource "azurerm_storage_account" "flow_logs" {
-  name                     = var.flow_logs_storage_name
-  location                 = var.location
-  resource_group_name      = var.resource_group_name
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-  tags                     = var.tags
+  name                            = var.flow_logs_storage_name
+  location                        = var.location
+  resource_group_name             = var.resource_group_name
+  account_tier                    = "Standard"
+  account_replication_type        = "LRS"
+  min_tls_version                 = "TLS1_2"
+  public_network_access_enabled   = false
+  allow_nested_items_to_be_public = false
+  tags                            = var.tags
+
+  blob_properties {
+    delete_retention_policy {
+      days = 7
+    }
+    container_delete_retention_policy {
+      days = 7
+    }
+  }
 }
 
 # --- Network Watcher (uses existing) ---
