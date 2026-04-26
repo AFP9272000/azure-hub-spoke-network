@@ -1,6 +1,3 @@
-@description('Resource group name')
-param resourceGroupName string
-
 @description('Front Door name')
 param frontDoorName string
 
