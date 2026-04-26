@@ -123,30 +123,30 @@ module storage 'modules/storage.bicep' = {
 }
 
 // App Service
-module appService 'modules/app-service.bicep' = {
-  scope: rg
-  name: 'app-service'
-  params: {
-    location: location
-    appServiceName: appServiceName
-    tags: tags
-  }
-}
+//module appService 'modules/app-service.bicep' = {
+//  scope: rg
+//  name: 'app-service'
+//  params: {
+//    location: location
+//    appServiceName: appServiceName
+//    tags: tags
+//  }
+//}
 
 // Front Door + WAF
-module frontDoor 'modules/front-door.bicep' = {
-  scope: rg
-  name: 'front-door'
-  params: {
-    resourceGroupName: resourceGroupName
-    frontDoorName: frontDoorName
-    wafPolicyName: wafPolicyName
-    appServiceHostname: appService.outputs.appServiceHostname
-    geoBlockCountries: geoBlockCountries
-    tags: tags
-  }
-  dependsOn: [appService]
-}
+//module frontDoor 'modules/front-door.bicep' = {
+//  scope: rg
+//  name: 'front-door'
+//  params: {
+//    resourceGroupName: resourceGroupName
+//    frontDoorName: frontDoorName
+//    wafPolicyName: wafPolicyName
+//    appServiceHostname: appService.outputs.appServiceHostname
+//    geoBlockCountries: geoBlockCountries
+//    tags: tags
+//  }
+//  dependsOn: [appService]
+//}
 
 // Monitoring
 module monitoring 'modules/monitoring.bicep' = {
