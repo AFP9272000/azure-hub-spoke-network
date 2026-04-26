@@ -85,6 +85,7 @@ resource route 'Microsoft.Cdn/profiles/afdEndpoints/routes@2023-05-01' = {
     patternsToMatch: ['/*']
     forwardingProtocol: 'HttpsOnly'
     httpsRedirect: 'Enabled'
+    linkToDefaultDomain: 'Enabled'
     enabledState: 'Enabled'
   }
 }
