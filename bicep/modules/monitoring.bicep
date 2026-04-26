@@ -53,10 +53,9 @@ resource flowLogsStorage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 }
 
 // Network Watcher
-resource networkWatcher 'Microsoft.Network/networkWatchers@2023-11-01' = {
-  name: 'nw-${location}'
-  location: location
-  tags: tags
+resource networkWatcher 'Microsoft.Network/networkWatchers@2023-11-01' existing = {
+  name: 'NetworkWatcher_${location}'
+  scope: resourceGroup('NetworkWatcherRG')
 }
 
 // VNet Flow Logs
