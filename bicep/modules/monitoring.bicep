@@ -47,98 +47,98 @@ resource flowLogsStorage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 }
 
 // Network Watcher
-resource networkWatcher 'Microsoft.Network/networkWatchers@2023-11-01' existing = {
-  name: 'NetworkWatcher_${location}'
-  scope: resourceGroup('NetworkWatcherRG')
-}
+//resource networkWatcher 'Microsoft.Network/networkWatchers@2023-11-01' existing = {
+//  name: 'NetworkWatcher_${location}'
+//  scope: resourceGroup('NetworkWatcherRG')
+//}
 
 // VNet Flow Logs
-resource flowLogHub 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
-  parent: networkWatcher
-  name: 'flowlog-vnet-hub'
-  location: location
-  tags: tags
-  properties: {
-    targetResourceId: hubVnetId
-    storageId: flowLogsStorage.id
-    enabled: true
-    format: {
-      type: 'JSON'
-      version: 2
-    }
-    retentionPolicy: {
-      enabled: true
-      days: 30
-    }
-    flowAnalyticsConfiguration: {
-      networkWatcherFlowAnalyticsConfiguration: {
-        enabled: true
-        workspaceResourceId: logAnalytics.id
-        workspaceId: logAnalytics.properties.customerId
-        workspaceRegion: location
-        trafficAnalyticsInterval: 10
-      }
-    }
-  }
-}
+//resource flowLogHub 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
+// parent: networkWatcher
+//  name: 'flowlog-vnet-hub'
+//  location: location
+//  tags: tags
+//  properties: {
+//    targetResourceId: hubVnetId
+//    storageId: flowLogsStorage.id
+//   enabled: true
+//    format: {
+//      type: 'JSON'
+//      version: 2
+//    }
+//    retentionPolicy: {
+//      enabled: true
+//      days: 30
+//    }
+//    flowAnalyticsConfiguration: {
+//      networkWatcherFlowAnalyticsConfiguration: {
+//        enabled: true
+//        workspaceResourceId: logAnalytics.id
+//        workspaceId: logAnalytics.properties.customerId
+//        workspaceRegion: location
+//        trafficAnalyticsInterval: 10
+//      }
+//    }
+//  }
+//}
 
-resource flowLogWeb 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
-  parent: networkWatcher
-  name: 'flowlog-vnet-spoke-web'
-  location: location
-  tags: tags
-  properties: {
-    targetResourceId: webSpokeVnetId
-    storageId: flowLogsStorage.id
-    enabled: true
-    format: {
-      type: 'JSON'
-      version: 2
-    }
-    retentionPolicy: {
-      enabled: true
-      days: 30
-    }
-    flowAnalyticsConfiguration: {
-      networkWatcherFlowAnalyticsConfiguration: {
-        enabled: true
-        workspaceResourceId: logAnalytics.id
-        workspaceId: logAnalytics.properties.customerId
-        workspaceRegion: location
-        trafficAnalyticsInterval: 10
-      }
-    }
-  }
-}
+//resource flowLogWeb 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
+//  parent: networkWatcher
+//  name: 'flowlog-vnet-spoke-web'
+//  location: location
+//  tags: tags
+//  properties: {
+//    targetResourceId: webSpokeVnetId
+//    storageId: flowLogsStorage.id
+//    enabled: true
+//    format: {
+//      type: 'JSON'
+//      version: 2
+//    }
+//    retentionPolicy: {
+//      enabled: true
+//      days: 30
+//    }
+//    flowAnalyticsConfiguration: {
+//      networkWatcherFlowAnalyticsConfiguration: {
+//        enabled: true
+//        workspaceResourceId: logAnalytics.id
+//        workspaceId: logAnalytics.properties.customerId
+//        workspaceRegion: location
+//        trafficAnalyticsInterval: 10
+//      }
+//    }
+//  }
+//}
 
-resource flowLogData 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
-  parent: networkWatcher
-  name: 'flowlog-vnet-spoke-data'
-  location: location
-  tags: tags
-  properties: {
-    targetResourceId: dataSpokeVnetId
-    storageId: flowLogsStorage.id
-    enabled: true
-    format: {
-      type: 'JSON'
-      version: 2
-    }
-    retentionPolicy: {
-      enabled: true
-      days: 30
-    }
-    flowAnalyticsConfiguration: {
-      networkWatcherFlowAnalyticsConfiguration: {
-        enabled: true
-        workspaceResourceId: logAnalytics.id
-        workspaceId: logAnalytics.properties.customerId
-        workspaceRegion: location
-        trafficAnalyticsInterval: 10
-      }
-    }
-  }
-}
+//resource flowLogData 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
+//  parent: networkWatcher
+//  name: 'flowlog-vnet-spoke-data'
+//  location: location
+//  tags: tags
+//  properties: {
+//    targetResourceId: dataSpokeVnetId
+//    storageId: flowLogsStorage.id
+//    enabled: true
+//    format: {
+//      type: 'JSON'
+//      version: 2
+//    }
+//    retentionPolicy: {
+//      enabled: true
+//      days: 30
+//    }
+//    flowAnalyticsConfiguration: {
+//      networkWatcherFlowAnalyticsConfiguration: {
+//        enabled: true
+//        workspaceResourceId: logAnalytics.id
+//        workspaceId: logAnalytics.properties.customerId
+//        workspaceRegion: location
+//        trafficAnalyticsInterval: 10
+//      }
+//    }
+//  }
+//}
 
 // Firewall Diagnostic Settings
 //resource firewallDiag 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
