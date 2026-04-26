@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "main" {
   tags     = var.tags
 }
 
-# --- Firewall (deployed first to get private IP for UDRs) ---
+# Firewall (deployed first to get private IP for UDRs)
 module "firewall" {
   source = "./modules/firewall"
 
