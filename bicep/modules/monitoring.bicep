@@ -148,34 +148,34 @@ resource flowLogData 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
 }
 
 // Firewall Diagnostic Settings
-resource firewallDiag 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: 'fw-diag'
-  scope: az.resourceId('Microsoft.Network/azureFirewalls', last(split(firewallId, '/')))
-  properties: {
-    workspaceId: logAnalytics.id
-    logs: [
-      { categoryGroup: 'allLogs', enabled: true }
-    ]
-    metrics: [
-      { category: 'AllMetrics', enabled: true }
-    ]
-  }
-}
+//resource firewallDiag 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+//  name: 'fw-diag'
+//  scope: az.resourceId('Microsoft.Network/azureFirewalls', last(split(firewallId, '/')))
+//  properties: {
+//    workspaceId: logAnalytics.id
+//    logs: [
+//      { categoryGroup: 'allLogs', enabled: true }
+//    ]
+//    metrics: [
+//      { category: 'AllMetrics', enabled: true }
+//    ]
+//  }
+//}
 
 // Front Door Diagnostic Settings
-resource frontDoorDiag 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  name: 'fd-diag'
-  scope: az.resourceId('Microsoft.Cdn/profiles', last(split(frontDoorId, '/')))
-  properties: {
-    workspaceId: logAnalytics.id
-    logs: [
-      { categoryGroup: 'allLogs', enabled: true }
-    ]
-    metrics: [
-      { category: 'AllMetrics', enabled: true }
-    ]
-  }
-}
+//resource frontDoorDiag 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+//  name: 'fd-diag'
+//  scope: az.resourceId('Microsoft.Cdn/profiles', last(split(frontDoorId, '/')))
+//  properties: {
+//    workspaceId: logAnalytics.id
+//    logs: [
+//      { categoryGroup: 'allLogs', enabled: true }
+//    ]
+//    metrics: [
+//      { category: 'AllMetrics', enabled: true }
+//    ]
+//  }
+//}
 
 // Action Group (conditional)
 resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = if (!empty(alertEmail)) {
