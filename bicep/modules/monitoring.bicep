@@ -16,12 +16,6 @@ param webSpokeVnetId string
 @description('Data spoke VNet ID')
 param dataSpokeVnetId string
 
-@description('Firewall ID')
-param firewallId string
-
-@description('Front Door ID')
-param frontDoorId string
-
 @description('Alert email')
 param alertEmail string = ''
 
