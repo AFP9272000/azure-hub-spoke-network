@@ -40,23 +40,23 @@ variable "storage_account_name" {
   default     = "sthubspokedata"
 }
 
-variable "app_service_name" {
-  description = "Globally unique name for the web app"
-  type        = string
-  default     = "app-hubspoke-web"
-}
+#variable "app_service_name" {
+#  description = "Globally unique name for the web app"
+#  type        = string
+#  default     = "app-hubspoke-web"
+#}
 
-variable "front_door_name" {
-  description = "Name for the Front Door profile"
-  type        = string
-  default     = "fd-hubspoke"
-}
+#variable "front_door_name" {
+# description = "Name for the Front Door profile"
+#  type        = string
+#  default     = "fd-hubspoke"
+#}
 
-variable "waf_policy_name" {
-  description = "Name for the WAF policy"
-  type        = string
-  default     = "wafpolicyhubspoke"
-}
+#variable "waf_policy_name" {
+#  description = "Name for the WAF policy"
+#  type        = string
+#  default     = "wafpolicyhubspoke"
+#}
 
 variable "log_analytics_workspace_name" {
   description = "Name for the Log Analytics workspace"
@@ -70,11 +70,11 @@ variable "alert_email" {
   default     = ""
 }
 
-variable "geo_block_countries" {
-  description = "List of country codes to block via WAF geo-filtering"
-  type        = list(string)
-  default     = ["CN", "RU", "KP", "IR"]
-}
+#variable "geo_block_countries" {
+#  description = "List of country codes to block via WAF geo-filtering"
+#  type        = list(string)
+#  default     = ["CN", "RU", "KP", "IR"]
+#}
 
 variable "tags" {
   description = "Tags to apply to all resources"
