@@ -14,6 +14,7 @@ skip-check:
   - CKV_AZURE_213  # Health check, Front Door health probes handle origin monitoring
   - CKV_AZURE_222  # Public access disabled, required for Front Door Standard (no private link support)
   - CKV_AZURE_88   # Azure Files, not applicable, no persistent storage requirement
+  - CKV_AZURE_12  # Flow log retention 90 days, 30 days acceptable for dev/portfolio, cost optimization
 
   # Azure Firewall
   - CKV_AZURE_220  # IDPS deny mode, requires Premium SKU (~2x cost), threat intelligence deny enabled on Standard
