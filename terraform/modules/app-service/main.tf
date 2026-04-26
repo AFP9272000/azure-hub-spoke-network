@@ -1,22 +1,26 @@
-# --- App Service Plan ---
+# App Service Plan
 resource "azurerm_service_plan" "web" {
   name                = "asp-hubspoke-web"
   location            = var.location
   resource_group_name = var.resource_group_name
   os_type             = "Linux"
-  sku_name            = "D1"
+  sku_name            = "B1"
   tags                = var.tags
 }
 
-# --- Web App ---
+# Web App
 resource "azurerm_linux_web_app" "web" {
   name                = var.app_service_name
   location            = var.location
   resource_group_name = var.resource_group_name
   service_plan_id     = azurerm_service_plan.web.id
+  https_only          = true
   tags                = var.tags
 
   site_config {
+    http2_enabled     = true
+    ftps_state        = "Disabled"
+
     application_stack {
       node_version = "20-lts"
     }
