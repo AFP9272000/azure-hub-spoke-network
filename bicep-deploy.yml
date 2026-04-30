@@ -128,12 +128,14 @@ stages:
                         --output table
 
                       echo ""
-                      echo "Firewall Status:"
-                      az network firewall show \
-                        --name fw-hub \
-                        --resource-group $(resourceGroupName) \
-                        --query "{Name:name, ProvisioningState:provisioningState, PrivateIP:ipConfigurations[0].properties.privateIPAddress}" \
-                        -o table
+                      echo "Front Door Status"
+                      # Front Door commented out due to App Service quota limitation
+                      # az afd profile show \
+                      #   --profile-name fd-hubspoke \
+                      #   --resource-group $(resourceGroupName) \
+                      #   --query "{Name:name, State:provisioningState, SKU:sku.name}" \
+                      #   -o table
+                      echo "Front Door skipped: App Service quota limitation"
 
                       echo ""
                       echo "Front Door Status:"
