@@ -81,6 +81,7 @@ resource firewall 'Microsoft.Network/azureFirewalls@2023-11-01' = {
 resource appRuleGroup 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2023-11-01' = {
   parent: firewallPolicy
   name: 'DefaultApplicationRuleCollectionGroup'
+  dependsOn: [firewall]
   properties: {
     priority: 100
     ruleCollections: [
